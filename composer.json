@@ -1,0 +1,26 @@
+{
+    "name": "fatihirday/enummethods",
+    "description": "PHP enum methods",
+    "type": "library",
+    "license": "MIT",
+    "version": "v1.0.0",
+    "authors":
+    [
+        {
+            "name": "fatihirday",
+            "email": "fatihirday@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require":
+    {
+        "php": "^8.1"
+    },
+    "autoload":
+    {
+        "psr-4":
+        {
+            "Fatihirday\\EnumMethods\\": "src/"
+        }
+    }
+}
