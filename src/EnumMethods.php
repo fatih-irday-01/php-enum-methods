@@ -5,6 +5,55 @@ namespace Fatihirday\EnumMethods;
 trait EnumMethods
 {
     /**
+     * @param bool $reverse
+     * @return array
+     */
+    public static function toArray(bool $reverse = false): array
+    {
+        return $reverse
+            ? array_column(self::cases(), 'name', 'value')
+            : array_column(self::cases(), 'value', 'name');
+    }
+
+    /**
+     * @param bool $reverse
+     * @return object
+     */
+    public static function toObject(bool $reverse = false): object
+    {
+        return (object)self::toArray($reverse);
+    }
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public static function tryFromName(string $name): bool
+    {
+        return array_key_exists(strtoupper($name), self::toArray());
+    }
+
+    /**
+     * @param string $name
+     * @return mixed|null
+     */
+    public static function getValueByName(string $name): mixed
+    {
+        return self::tryFromName($name) ? self::toArray()[strtoupper($name)] : null;
+    }
+
+    /**
+     * @param string|int $value
+     * @return string|null
+     */
+    public static function getNameByValue(string|int $value): ?string
+    {
+        $get = self::tryFrom($value);
+
+        return $get?->name ?? null;
+    }
+
+    /**
      * @param string|null $operator
      * @return string|array
      */
@@ -24,37 +73,5 @@ trait EnumMethods
         $values = array_column(self::cases(), 'value');
 
         return is_null($operator) ? $values : implode($operator, $values);
-    }
-
-    /**
-     * @param string|null $key
-     * @return array
-     * @throws \Exception
-     */
-    public static function toArray(?string $key = 'name'): array
-    {
-        self::validation(strtolower($key), ['name', 'value']);
-
-        $variables = match (strtolower($key)) {
-            'name' => [self::names(), self::values()],
-            'value' => [self::values(), self::names()]
-        };
-
-        return array_combine(...$variables);
-    }
-
-    /**
-     * @param string $option
-     * @param array $parameters
-     * @return void
-     * @throws \Exception
-     */
-    private static function validation(string $option, array $parameters): void
-    {
-        if (!in_array(strtolower($option), $parameters)) {
-            $message = ['Error Parameter :', $option, '. options'];
-            $message[] = join('|', $parameters);
-            throw new \Exception(join(' ', $message), 500);
-        }
     }
 }
