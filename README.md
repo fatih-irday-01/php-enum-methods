@@ -76,12 +76,63 @@ HttpMethods::toArray();
 //    )
 
 
-HttpMethods::toArray(key: 'value');
+HttpMethods::toArray(reverse: true);
 
 //    Array
 //    (
 //        [get] => GET
 //        [post] => POST
 //    )
+
+```
+
+
+#### Enum to Object
+```php
+<?php
+
+HttpMethods::toObject();
+
+//    Object
+//    (
+//        get => GET
+//        post => POST
+//    )
+
+
+HttpMethods::toObject(reverse: true);
+
+//    Object
+//    (
+//        get => GET
+//        post => POST
+//    )
+
+```
+
+
+#### Enum summoner
+```php
+<?php
+
+HttpMethods::getValueByName('GET');
+
+//    get
+
+
+HttpMethods::getNameByValue('get');
+
+//    GET
+
+```
+
+
+#### Enum name check
+```php
+<?php
+
+HttpMethods::tryFromName('GET');
+
+//    True
 
 ```
